@@ -1,44 +1,41 @@
 import shap
 from transformers import pipeline
 
-# Initialize the pipeline
-# Note: Using a specific model for spam if available is better, 
-# but distilbert-base-uncased-finetuned-sst-2-english works for testing.
+# 1. USE THE SAME MODEL AS model.py
+MODEL_NAME = "cybersectony/phishing-email-detection-distilbert_v2.1"
+
 pipe = pipeline(
     "text-classification",
-    model="distilbert-base-uncased-finetuned-sst-2-english",
+    model=MODEL_NAME,
     return_all_scores=True
 )
 
-# Initialize the explainer
-# We specify the model and the masker (which tells SHAP how to hide words)
+# 2. Use a simpler explainer for faster responses in the Edge popup
 explainer = shap.Explainer(pipe)
 
 def explain_email(text):
-    if not text.strip():
+    if not text.strip() or len(text.strip()) < 10:
         return []
 
-    # Get SHAP values
-    shap_values = explainer([text])
-    
-    # SHAP for text returns an object where:
-    # .data[0] are the tokens/words
-    # .values[0] are the importance scores for each token
-    words = shap_values.data[0]
-    
-    # We look at the scores for the 'POSITIVE' (or SPAM) class.
-    # If your model has 2 classes, index [:, 1] usually targets the second label.
-    scores = shap_values.values[0][:, 1] 
-
-    suspicious_words = []
-    
-    for w,s in zip(words, scores):
-        # Clean the word (remove whitespace markers and special tokens)
-        clean_word = str(w).strip().replace('Ġ', '')
+    try:
+        # Get SHAP values for the first 128 tokens to save memory
+        shap_values = explainer([text[:512]]) 
         
-        # Filter: Only keep meaningful words with high impact scores
-        if s > 0.15 and clean_word not in ["[CLS]", "[SEP]", ""]:
-            suspicious_words.append(clean_word)
+        words = shap_values.data[0]
+        # Index [:, 1] targets the 'Phishing/Spam' class in your model
+        scores = shap_values.values[0][:, 1] 
 
-    # Return unique words, limited to the top 12
-    return list(dict.fromkeys(suspicious_words))[:12]
+        suspicious_words = []
+        for w, s in zip(words, scores):
+            clean_word = str(w).strip().replace('Ġ', '').replace('##', '')
+            
+            # 3. INCREASE SCORE THRESHOLD
+            # Only highlight words that significantly push the score toward SPAM
+            if s > 0.4 and len(clean_word) > 2: 
+                if clean_word.lower() not in ["[cls]", "[sep]", "the", "and", "your"]:
+                    suspicious_words.append(clean_word)
+
+        return list(dict.fromkeys(suspicious_words))[:10]
+    except Exception as e:
+        print(f"SHAP Error: {e}")
+        return []

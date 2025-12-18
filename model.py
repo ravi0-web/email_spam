@@ -1,28 +1,40 @@
+import torch
 from transformers import pipeline
 
-# Dedicated model for Email Phishing & Spam detection
 MODEL_NAME = "cybersectony/phishing-email-detection-distilbert_v2.1"
 
 classifier = pipeline(
-    "text-classification",
-    model=MODEL_NAME,
-    return_all_scores=True
+    "text-classification", 
+    model=MODEL_NAME, 
+    top_k=None 
 )
 
 def predict_spam(text):
     if not text.strip():
-        return {"spam_probability": 0.0, "label": "SAFE"}
+        return {"label": "SAFE", "confidence": 0.0, "words": []}
 
-    # Run inference
-    results = classifier(text)[0]
+    results = classifier(text[:512])[0]
     
-    # Map the model-specific labels to your UI labels
-    # Most spam models use LABEL_0 (Safe) and LABEL_1 (Spam)
-    # Check your model's card, but usually higher index = malicious
-    spam_score = results[1]["score"] 
-    ham_score = results[0]["score"]
+    spam_score = 0.0
+    for res in results:
+        if res['label'] == 'LABEL_1':
+            spam_score = res['score']
+
+    label = "SPAM" if spam_score > 0.70 else "SAFE"
+
+    # --- IMPROVED DESCRIPTION LOGIC ---
+    risk_triggers = ["verify", "urgent", "login", "account", "suspended", "security", "click", "bank", "action required", "unusual"]
+    
+    # Use lowercase for searching to ensure matches
+    text_lower = text.lower()
+    found_description = []
+    
+    for word in risk_triggers:
+        if word in text_lower:
+            found_description.append(word)
 
     return {
-        "spam_probability": round(spam_score * 100, 2),
-        "label": "SPAM" if spam_score > 0.5 else "NOT SPAM"
+        "label": label,
+        "confidence": float(spam_score),
+        "words": found_description  # This is the list of triggers
     }
