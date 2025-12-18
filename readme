@@ -1,0 +1,44 @@
+# AI Spam & Phishing Shield - Documentation
+**Version:** 1.0.0  
+**Author:** AI Security Project  
+
+---
+
+## 1. Project Overview
+AI Spam Shield is a browser-integrated security tool that uses a **DistilBERT Transformer** model to detect phishing attempts in Gmail. It provides real-time risk percentages and highlights suspicious keywords.
+
+## 2. System Requirements
+- **OS:** Windows 10/11, macOS, or Linux
+- **Python:** Version 3.8 or higher
+- **Browser:** Microsoft Edge or Google Chrome
+
+## 3. Installation Guide
+
+### Part A: The AI Backend (The Engine)
+1. Open a terminal/command prompt in the `backend/` folder.
+2. Install dependencies:
+   `pip install -r requirements.txt`
+3. Launch the server:
+   `python main.py`
+   *Note: Keep this window open. It serves as the "brain" for the extension.*
+
+### Part B: The Browser Extension
+1. Open your browser and navigate to `edge://extensions` or `chrome://extensions`.
+2. Enable **Developer Mode**.
+3. Click **Load Unpacked**.
+4. Select the `extension/` folder from the project directory.
+5. Click the "Puzzle" icon in the toolbar and **Pin** the AI Spam Shield.
+
+## 4. How to Use
+1. Open any email in Gmail.
+2. Click the **Shield Icon** in your browser toolbar.
+3. Select **Run Full Analysis**.
+4. View the **Spam Probability** bar and the **Suspicious Triggers** list.
+
+## 5. Troubleshooting
+- **Status: Engine Offline:** Ensure `main.py` is running in your terminal.
+- **Connection Error:** Check if your firewall is blocking port `8000`.
+- **No triggers found:** If the confidence is low, the AI may not find specific high-risk words.
+
+---
+*Disclaimer: This tool is an AI-based assistant. Always exercise caution before clicking links in suspicious emails.*
