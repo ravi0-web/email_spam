@@ -1,7 +1,7 @@
  SpamGuard
 
-SpamGuard is a **browser-based Gmail security extension** that uses a **Transformer (DistilBERT) NLP model** to detect spam and phishing emails in real time.  
-The system analyzes email content, calculates a **spam probability score**, and highlights **high-risk sentences** to help users avoid malicious emails.
+SpamGuard is a browser-based Gmail security extension that uses a Transformer (DistilBERT) NLP model to detect spam and phishing emails in real time.  
+The system analyzes email content, calculates a spam probability score, and highlights high-risk sentences to help users avoid malicious emails.
 
  Key Features
 - AI-powered spam & phishing detection  
@@ -12,9 +12,9 @@ The system analyzes email content, calculates a **spam probability score**, and 
 - Privacy-safe local AI processing  
 
  Technology Stack
-- **Frontend:** HTML, CSS, JavaScript (Browser Extension)  
-- **Backend:** Python, FastAPI  
-- **AI Model:** DistilBERT (HuggingFace Transformers, PyTorch)
+- Frontend: HTML, CSS, JavaScript (Browser Extension)  
+- Backend: Python, FastAPI  
+- AI Model:DistilBERT (HuggingFace Transformers, PyTorch)
 
 Installation & Setup 
 - pip install -r requirements.txt
