@@ -1,44 +1,47 @@
-# AI Spam & Phishing Shield - Documentation
-**Version:** 1.0.0  
-**Author:** AI Security Project  
 
----
+# SpamGuard
 
-## 1. Project Overview
-AI Spam Shield is a browser-integrated security tool that uses a **DistilBERT Transformer** model to detect phishing attempts in Gmail. It provides real-time risk percentages and highlights suspicious keywords.
+SpamGuard is a **browser-based Gmail security extension** that uses a **Transformer (DistilBERT) NLP model** to detect spam and phishing emails in real time.  
+The system analyzes email content, calculates a **spam probability score**, and highlights **high-risk sentences** to help users avoid malicious emails.
 
-## 2. System Requirements
-- **OS:** Windows 10/11, macOS, or Linux
-- **Python:** Version 3.8 or higher
-- **Browser:** Microsoft Edge or Google Chrome
+# Key Features
+- AI-powered spam & phishing detection  
+- Real-time spam probability (0–100%)  
+- High-risk sentence and trigger highlighting  
+- Seamless Gmail integration  
+- Works on Chrome & Microsoft Edge  
+- Privacy-safe local AI processing  
 
-## 3. Installation Guide
+# Technology Stack
+- **Frontend:** HTML, CSS, JavaScript (Browser Extension)  
+- **Backend:** Python, FastAPI  
+- **AI Model:** DistilBERT (HuggingFace Transformers, PyTorch)
 
-### Part A: The AI Backend (The Engine)
-1. Open a terminal/command prompt in the `backend/` folder.
-2. Install dependencies:
-   `pip install -r requirements.txt`
-3. Launch the server:
-   `python main.py`
-   *Note: Keep this window open. It serves as the "brain" for the extension.*
+## ⚙️ Installation & Setup 
+- pip install -r requirements.txt
+- python main.py
+(Keep the server running on localhost:8000)
 
-### Part B: The Browser Extension
-1. Open your browser and navigate to `edge://extensions` or `chrome://extensions`.
-2. Enable **Developer Mode**.
-3. Click **Load Unpacked**.
-4. Select the `extension/` folder from the project directory.
-5. Click the "Puzzle" icon in the toolbar and **Pin** the AI Spam Shield.
+## Browser Extension
+- Open chrome://extensions or edge://extensions
+- Enable Developer Mode
+- Click Load Unpacked
+- Select the extension/ folder
 
-## 4. How to Use
-1. Open any email in Gmail.
-2. Click the **Shield Icon** in your browser toolbar.
-3. Select **Run Full Analysis**.
-4. View the **Spam Probability** bar and the **Suspicious Triggers** list.
+## How It Works
+- Open an email in Gmail
+- Click the Edge AI Email Scanner
+- Run full analysis
+- View spam risk level and suspicious sentences
 
-## 5. Troubleshooting
-- **Status: Engine Offline:** Ensure `main.py` is running in your terminal.
-- **Connection Error:** Check if your firewall is blocking port `8000`.
-- **No triggers found:** If the confidence is low, the AI may not find specific high-risk words.
+## Privacy & Disclaimer
+- Email content is analyzed locally
+- No data is stored or shared
+- AI-based assistant — always verify suspicious emails manually
 
----
-*Disclaimer: This tool is an AI-based assistant. Always exercise caution before clicking links in suspicious emails.*
+
+
+
+
+
+
