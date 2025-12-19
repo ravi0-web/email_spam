@@ -38,9 +38,16 @@ How It Works
 - No data is stored or shared
 - AI-based assistant — always verify suspicious emails manually
 
+Project Overview 
+SpamGuard is designed to provide an extra layer of security for Gmail users by detecting spam and phishing attempts directly inside the browser. By leveraging Transformer-based natural language processing, the system evaluates email content in real time and determines the likelihood of malicious intent without interrupting the user’s workflow.
+The extension communicates with a locally hosted backend service, ensuring fast analysis while maintaining user privacy. This architecture allows SpamGuard to deliver accurate results without sending sensitive email data to external servers.
 
-
-
+Practical Applications
+- SpamGuard can be used by individuals and organizations to:
+- Reduce exposure to phishing attacks
+- Identify scam and fraudulent emails
+- Improve email security awareness
+- Assist users with limited technical knowledge
 
 
 
